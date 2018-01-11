@@ -1,4 +1,4 @@
-package rc.loveq.baselib.bottomnavigation;
+package rc.loveq.baselib.ui.bottomnavigation;
 
 import android.support.design.internal.BottomNavigationItemView;
 import android.support.design.internal.BottomNavigationMenuView;

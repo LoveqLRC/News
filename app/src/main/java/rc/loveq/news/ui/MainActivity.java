@@ -5,9 +5,9 @@ import android.support.design.widget.BottomNavigationView;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 
-import rc.loveq.baselib.BaseActivity;
-import rc.loveq.baselib.adapter.MyAdapter;
-import rc.loveq.baselib.bottomnavigation.BottomNavigationViewHelper;
+import rc.loveq.baselib.ui.BaseActivity;
+import rc.loveq.baselib.ui.adapter.MyAdapter;
+import rc.loveq.baselib.ui.bottomnavigation.BottomNavigationViewHelper;
 import rc.loveq.news.R;
 
 public class MainActivity extends BaseActivity {

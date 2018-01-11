@@ -1,10 +1,12 @@
-package rc.loveq.baselib;
+package rc.loveq.baselib.ui;
 
 import android.os.Bundle;
 import android.support.annotation.LayoutRes;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+
+import rc.loveq.baselib.R;
 
 
 /**
