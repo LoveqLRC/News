@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+      xmlns:app="http://schemas.android.com/apk/res-auto">
+    <item
+        android:id="@+id/action_news"
+        android:enabled="true"
+        android:icon="@drawable/ic_bnv_news"
+        android:title="@string/title_news"
+        app:showAsAction="ifRoom"/>
+    <item
+        android:id="@+id/action_video"
+        android:enabled="true"
+        android:icon="@drawable/ic_bnv_video"
+        android:title="@string/title_video"
+        app:showAsAction="ifRoom"/>
+    <item
+        android:id="@+id/action_discover"
+        android:enabled="true"
+        android:icon="@drawable/ic_bnv_discover"
+        android:title="@string/title_discover"
+        app:showAsAction="ifRoom"/>
+    <item
+        android:id="@+id/action_profile"
+        android:enabled="true"
+        android:icon="@drawable/ic_bnv_profile"
+        android:title="@string/title_profile"
+        app:showAsAction="ifRoom"/>
+</menu>

@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.design.widget.CoordinatorLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="rc.loveq.news.ui.MainActivity">
+
+    <include layout="@layout/layout_toolbar"/>
+
+    <android.support.v7.widget.RecyclerView
+        android:id="@+id/container"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        app:layout_behavior="@string/appbar_scrolling_view_behavior"/>
+
+    <android.support.design.widget.BottomNavigationView
+        android:id="@+id/bnv_bottom_navigation"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="bottom"
+        app:elevation="16dp"
+        app:itemIconTint="@drawable/selector_bnv_color"
+        app:itemTextColor="@drawable/selector_bnv_color"
+        app:menu="@menu/menu_main_bnv"
+        />
+
+</android.support.design.widget.CoordinatorLayout>
