@@ -36,7 +36,7 @@ public abstract class BaseFragment extends Fragment {
 
     protected abstract void initData();
 
-    public static String getFragmentTag() {
-        return BaseFragment.class.getName();
+    public String getFragmentTag() {
+        return this.getClass().getName();
     }
 }

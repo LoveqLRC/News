@@ -1,16 +1,35 @@
 package rc.loveq.news.ui;
 
 import android.os.Bundle;
+import android.support.annotation.IntDef;
+import android.support.annotation.NonNull;
 import android.support.design.widget.BottomNavigationView;
-import android.support.v7.widget.LinearLayoutManager;
-import android.support.v7.widget.RecyclerView;
+import android.support.v4.app.FragmentTransaction;
+import android.view.MenuItem;
+
+import java.lang.annotation.Retention;
+import java.lang.annotation.RetentionPolicy;
 
 import rc.loveq.baselib.ui.BaseActivity;
-import rc.loveq.baselib.ui.adapter.MyAdapter;
+import rc.loveq.baselib.ui.FragmentFactory;
 import rc.loveq.baselib.ui.bottomnavigation.BottomNavigationViewHelper;
 import rc.loveq.news.R;
+import rc.loveq.news.ui.discover.DiscoverFragment;
+import rc.loveq.news.ui.news.NewsFragment;
+import rc.loveq.news.ui.profile.ProfileFragment;
+import rc.loveq.news.ui.video.VideoFragment;
 
-public class MainActivity extends BaseActivity {
+public class MainActivity extends BaseActivity implements BottomNavigationView.OnNavigationItemSelectedListener {
+
+    public NewsFragment mNewsFragment;
+    public VideoFragment mVideoFragment;
+    public DiscoverFragment mDiscoverFragment;
+    public ProfileFragment mProfileFragment;
+    private @FragmentTabs
+    int mCurrentFragmentIndex;
+    public static final String POSITION = "POSITION";
+    public static final String BNV_SELECTED_ID = "";
+    public BottomNavigationView mBottomNavigationView;
 
     @Override
     protected int getLayoutId() {
@@ -21,18 +40,129 @@ public class MainActivity extends BaseActivity {
     protected void initView(Bundle savedInstanceState) {
         setupToolbar();
         setupNavigationView();
-        RecyclerView recyclerView = findViewById(R.id.container);
-        recyclerView.setAdapter(new MyAdapter());
-        recyclerView.setLayoutManager(new LinearLayoutManager(this));
+        setupFragment(savedInstanceState);
     }
 
+
     private void setupNavigationView() {
-        BottomNavigationView bottomNavigationView = findViewById(R.id.bnv_bottom_navigation);
-        BottomNavigationViewHelper.disableShiftMode(bottomNavigationView);
+        mBottomNavigationView = findViewById(R.id.bnv_bottom_navigation);
+        BottomNavigationViewHelper.disableShiftMode(mBottomNavigationView);
+        mBottomNavigationView.setOnNavigationItemSelectedListener(this);
+    }
+
+    @Override
+    protected void onSaveInstanceState(Bundle outState) {
+        super.onSaveInstanceState(outState);
+        outState.putInt(POSITION, mCurrentFragmentIndex);
+        outState.putInt(BNV_SELECTED_ID, mBottomNavigationView.getSelectedItemId());
+    }
+
+    private void setupFragment(Bundle savedInstanceState) {
+        if (savedInstanceState != null) {
+            mNewsFragment = (NewsFragment) getSupportFragmentManager().findFragmentByTag(NewsFragment.class.getName());
+            mVideoFragment = (VideoFragment) getSupportFragmentManager().findFragmentByTag(VideoFragment.class.getName());
+            mDiscoverFragment = (DiscoverFragment) getSupportFragmentManager().findFragmentByTag(DiscoverFragment.class.getName());
+            mProfileFragment = (ProfileFragment) getSupportFragmentManager().findFragmentByTag(ProfileFragment.class.getName());
+            showFragment(savedInstanceState.getInt(POSITION));
+            mBottomNavigationView.setSelectedItemId(savedInstanceState.getInt(BNV_SELECTED_ID));
+        } else {
+            showFragment(FragmentTabs.NEWS);
+        }
     }
 
     @Override
     protected void initData() {
 
+    }
+
+
+    @Override
+    public boolean onNavigationItemSelected(@NonNull MenuItem item) {
+        switch (item.getItemId()) {
+            case R.id.bnv_news:
+                showFragment(FragmentTabs.NEWS);
+                break;
+            case R.id.bnv_video:
+                showFragment(FragmentTabs.VIDEO);
+                break;
+            case R.id.bnv_discover:
+                showFragment(FragmentTabs.DISCOVER);
+                break;
+            case R.id.bnv_profile:
+                showFragment(FragmentTabs.PROFILE);
+                break;
+        }
+        return true;
+    }
+
+    private void showFragment(@FragmentTabs int index) {
+        FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
+        hideFragment(transaction);
+        mCurrentFragmentIndex = index;
+        switch (index) {
+            case FragmentTabs.NEWS:
+                mToolbar.setTitle(R.string.title_news);
+                if (mNewsFragment == null) {
+                    mNewsFragment = FragmentFactory.createFragment(NewsFragment.class);
+                    transaction.add(R.id.container, mNewsFragment, NewsFragment.class.getName());
+                } else {
+                    transaction.show(mNewsFragment);
+                }
+                break;
+            case FragmentTabs.VIDEO:
+                mToolbar.setTitle(R.string.title_video);
+                if (mVideoFragment == null) {
+                    mVideoFragment = FragmentFactory.createFragment(VideoFragment.class);
+                    transaction.add(R.id.container, mVideoFragment, VideoFragment.class.getName());
+                } else {
+                    transaction.show(mVideoFragment);
+                }
+                break;
+            case FragmentTabs.DISCOVER:
+                mToolbar.setTitle(R.string.title_discover);
+                if (mDiscoverFragment == null) {
+                    mDiscoverFragment = FragmentFactory.createFragment(DiscoverFragment.class);
+                    transaction.add(R.id.container, mDiscoverFragment, DiscoverFragment.class.getName());
+                } else {
+                    transaction.show(mDiscoverFragment);
+                }
+                break;
+            case FragmentTabs.PROFILE:
+                mToolbar.setTitle(R.string.title_profile);
+                if (mProfileFragment == null) {
+                    mProfileFragment = FragmentFactory.createFragment(ProfileFragment.class);
+                    transaction.add(R.id.container, mProfileFragment, ProfileFragment.class.getName());
+                } else {
+                    transaction.show(mProfileFragment);
+                }
+                break;
+        }
+        transaction.commit();
+    }
+
+    private void hideFragment(FragmentTransaction transaction) {
+        if (mNewsFragment != null) {
+            transaction.hide(mNewsFragment);
+        }
+        if (mVideoFragment != null) {
+            transaction.hide(mVideoFragment);
+        }
+        if (mDiscoverFragment != null) {
+            transaction.hide(mDiscoverFragment);
+        }
+        if (mProfileFragment != null) {
+            transaction.hide(mProfileFragment);
+        }
+    }
+
+
+    @IntDef({FragmentTabs.NEWS, FragmentTabs.VIDEO, FragmentTabs.DISCOVER,
+            FragmentTabs.PROFILE})
+    @Retention(RetentionPolicy.SOURCE)
+    @interface FragmentTabs {
+        int NEWS = 0;
+        int VIDEO = 1;
+        int DISCOVER = 2;
+        int PROFILE = 3;
     }
 }
