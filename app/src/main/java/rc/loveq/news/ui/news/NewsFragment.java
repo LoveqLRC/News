@@ -1,8 +1,11 @@
 package rc.loveq.news.ui.news;
 
-import android.os.Bundle;
+import android.support.design.widget.TabLayout;
+import android.support.v4.view.ViewPager;
 import android.view.View;
-import android.widget.TextView;
+
+import java.util.Arrays;
+import java.util.List;
 
 import rc.loveq.baselib.ui.BaseFragment;
 import rc.loveq.news.R;
@@ -13,12 +16,9 @@ import rc.loveq.news.R;
  */
 
 public class NewsFragment extends BaseFragment {
-    public static NewsFragment newInstance() {
-        Bundle args = new Bundle();
-        NewsFragment fragment = new NewsFragment();
-        fragment.setArguments(args);
-        return fragment;
-    }
+
+    public TabLayout mTabLayout;
+    public ViewPager mVpNews;
 
     @Override
     protected int getLayoutId() {
@@ -27,12 +27,17 @@ public class NewsFragment extends BaseFragment {
 
     @Override
     protected void initView(View view) {
-        TextView tv = view.findViewById(R.id.textView);
-        tv.setText(getFragmentTag());
+        mTabLayout = view.findViewById(R.id.tl_news);
+        mVpNews = view.findViewById(R.id.vp_news);
     }
 
     @Override
     protected void initData() {
-
+        List<String> channelNames = Arrays.asList(mActivity.getResources().getStringArray(R.array.news_channel));
+        List<String> channelIds = Arrays.asList(mActivity.getResources().getStringArray(R.array.news_channel_id));
+        mVpNews.setAdapter(new NewsPagerAdapter(getChildFragmentManager(), channelNames, channelIds));
+        mTabLayout.setupWithViewPager(mVpNews);
     }
+
+
 }

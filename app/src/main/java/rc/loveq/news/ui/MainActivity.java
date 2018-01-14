@@ -92,7 +92,7 @@ public class MainActivity extends BaseActivity implements BottomNavigationView.O
                 showFragment(FragmentTabs.PROFILE);
                 break;
         }
-        return true;
+        return true;//这里必须返回true
     }
 
     private void showFragment(@FragmentTabs int index) {
