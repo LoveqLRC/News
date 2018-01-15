@@ -14,8 +14,9 @@ import rc.loveq.news.R;
  * 0n 2018/1/13 16:26
  */
 
-public class NewsChannelFragment extends LazyLoadFragment {
+public class NewsChannelFragment extends LazyLoadFragment implements NewsChannelView {
     public static final String NEWS_ID = "NEWS_ID";
+    private NewsChannelPresenter mPresenter;
 
     public static NewsChannelFragment newInstance(String newsId) {
         Bundle args = new Bundle();
@@ -35,11 +36,19 @@ public class NewsChannelFragment extends LazyLoadFragment {
         RecyclerView recyclerView = view.findViewById(R.id.recycler);
         recyclerView.setAdapter(new MyAdapter());
         recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
+        mPresenter = new NewsChannelPresenter();
+        mPresenter.onAttach(this);
     }
 
 
     @Override
     protected void lazyLoadData() {
+        mPresenter.loadData();
+    }
 
+    @Override
+    public void onDestroyView() {
+        mPresenter.onDetach();
+        super.onDestroyView();
     }
 }
