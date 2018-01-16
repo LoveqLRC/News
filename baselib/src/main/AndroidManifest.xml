@@ -1,2 +1,12 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-          package="rc.loveq.baselib"/>
+          package="rc.loveq.baselib">
+
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE"/>
+    <application>
+        <activity
+            android:name=".utils.permission.PermissionUtils$PermissionActivity"
+            android:configChanges="orientation|keyboardHidden|screenSize"
+            android:taskAffinity="rc.loveq.baselib.utils.permission.PermissionUtils.PermissionActivity"
+            android:windowSoftInputMode="stateHidden|stateAlwaysHidden"/>
+    </application>
+</manifest>

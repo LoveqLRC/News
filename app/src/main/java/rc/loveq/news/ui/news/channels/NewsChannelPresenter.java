@@ -6,10 +6,9 @@ import java.util.concurrent.TimeUnit;
 
 import io.reactivex.Observable;
 import io.reactivex.Observer;
-import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.disposables.Disposable;
-import io.reactivex.schedulers.Schedulers;
 import rc.loveq.baselib.ui.BasePresenter;
+import rc.loveq.baselib.utils.RxSchedulers;
 
 /**
  * Created by rc on 2018/1/15.
@@ -23,8 +22,7 @@ public class NewsChannelPresenter<V extends NewsChannelView> extends BasePresent
     @Override
     public void loadData() {
         Observable.interval(1, TimeUnit.SECONDS)
-                .subscribeOn(Schedulers.newThread())
-                .observeOn(AndroidSchedulers.mainThread())
+                .compose(RxSchedulers.io_main())
                 .compose(this.bindToLifecycle())
                 .subscribe(new Observer<Long>() {
                     @Override

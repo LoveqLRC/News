@@ -9,10 +9,14 @@ import android.view.MenuItem;
 
 import java.lang.annotation.Retention;
 import java.lang.annotation.RetentionPolicy;
+import java.util.List;
 
 import rc.loveq.baselib.ui.BaseActivity;
 import rc.loveq.baselib.ui.FragmentFactory;
 import rc.loveq.baselib.ui.bottomnavigation.BottomNavigationViewHelper;
+import rc.loveq.baselib.utils.DialogHelper;
+import rc.loveq.baselib.utils.permission.PermissionConstants;
+import rc.loveq.baselib.utils.permission.PermissionUtils;
 import rc.loveq.news.R;
 import rc.loveq.news.ui.discover.DiscoverFragment;
 import rc.loveq.news.ui.news.NewsFragment;
@@ -41,6 +45,28 @@ public class MainActivity extends BaseActivity implements BottomNavigationView.O
         setupToolbar();
         setupNavigationView();
         setupFragment(savedInstanceState);
+        requestPermissions();
+    }
+
+    private void requestPermissions() {
+        PermissionUtils.permission(PermissionConstants.STORAGE)
+                .rationale(shouldRequest -> DialogHelper.showRationaleDialog(shouldRequest))
+                .callback(new PermissionUtils.FullCallback() {
+                    @Override
+                    public void onGranted(List<String> permissionsGranted) {
+                        showMessage("onGranted");
+                    }
+
+                    @Override
+                    public void onDenied(List<String> permissionsDeniedForever,
+                                         List<String> permissionsDenied) {
+                        if (!permissionsDeniedForever.isEmpty()) {
+                            showMessage("onDenied");
+                            DialogHelper.showOpenAppSettingDialog();
+                        }
+                    }
+                })
+                .request();
     }
 
 
