@@ -1,7 +1,6 @@
 package rc.loveq.news;
 
-import android.app.Application;
-
+import rc.loveq.baselib.BaseApp;
 import rc.loveq.baselib.utils.Utils;
 
 /**
@@ -9,7 +8,7 @@ import rc.loveq.baselib.utils.Utils;
  * 0n 2018/1/11 21:58
  */
 
-public class App extends Application {
+public class App extends BaseApp {
     @Override
     public void onCreate() {
         super.onCreate();
