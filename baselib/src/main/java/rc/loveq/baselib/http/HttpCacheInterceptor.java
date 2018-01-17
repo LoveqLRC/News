@@ -13,7 +13,7 @@ import rc.loveq.baselib.utils.NetworkUtils;
  * 0n 2018/1/16 22:05
  */
 
-public class CacheControlInterceptor implements Interceptor {
+public class HttpCacheInterceptor implements Interceptor {
     // 设缓存有效期为两天
     private static final long CACHE_STALE_SEC = 60 * 60 * 24 * 2;
     // 30秒内直接读缓存

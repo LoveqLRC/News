@@ -1,4 +1,4 @@
-package rc.loveq.baselib.ui.adapter;
+package rc.loveq.baselib;
 
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;

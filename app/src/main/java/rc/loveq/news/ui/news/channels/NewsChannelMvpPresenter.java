@@ -8,5 +8,5 @@ import rc.loveq.baselib.ui.mvp.MvpPresenter;
  */
 
 public interface NewsChannelMvpPresenter<V extends NewsChannelView> extends MvpPresenter<V> {
-    void loadData();
+    void loadData(String channelType, String newsId);
 }

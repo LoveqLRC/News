@@ -1,0 +1,68 @@
+package rc.loveq.news.data.api;
+
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
+
+import java.io.File;
+import java.util.concurrent.TimeUnit;
+
+import okhttp3.Cache;
+import okhttp3.OkHttpClient;
+import okhttp3.logging.HttpLoggingInterceptor;
+import rc.loveq.baselib.http.HttpCacheInterceptor;
+import rc.loveq.news.App;
+import rc.loveq.news.data.api.interceptor.HttpHeaderInterceptor;
+import rc.loveq.news.data.api.news.NewsService;
+import retrofit2.Retrofit;
+import retrofit2.adapter.rxjava2.RxJava2CallAdapterFactory;
+import retrofit2.converter.gson.GsonConverterFactory;
+
+/**
+ * Created by rc on 2018/1/17.
+ * Description:
+ */
+
+public class RetrofitClient {
+
+    private Retrofit mRetrofit;
+    private NewsService mNewsService;
+    private static volatile OkHttpClient sOkHttpClient;
+
+
+    private HttpCacheInterceptor mCacheInterceptor = new HttpCacheInterceptor();
+    private HttpHeaderInterceptor mHeaderInterceptor = new HttpHeaderInterceptor();
+    private HttpLoggingInterceptor mHttpLoggingInterceptor = new HttpLoggingInterceptor();
+
+    private RetrofitClient() {
+        File file = new File(App.getContext().getCacheDir(), "cache");
+        mHttpLoggingInterceptor.setLevel(HttpLoggingInterceptor.Level.BODY);
+        Cache cache = new Cache(file, 1024 * 1024 * 100);
+        OkHttpClient okHttpClient = new OkHttpClient.Builder()
+                .cache(cache)
+                .addNetworkInterceptor(mCacheInterceptor)
+                .addInterceptor(mCacheInterceptor)
+                .addInterceptor(mHeaderInterceptor)
+                .addInterceptor(mHttpLoggingInterceptor)
+                .retryOnConnectionFailure(true)
+                .connectTimeout(30, TimeUnit.SECONDS)
+                .build();
+        Gson gson = new GsonBuilder().setDateFormat("yyyy-MM-dd HH:mm:ss").serializeNulls().create();
+        mRetrofit = new Retrofit.Builder()
+                .client(okHttpClient)
+                .addConverterFactory(GsonConverterFactory.create(gson))
+                .addCallAdapterFactory(RxJava2CallAdapterFactory.create())
+                .baseUrl(NewsService.NEW_END_POINT)
+                .build();
+        mNewsService = mRetrofit.create(NewsService.class);
+    }
+
+    private static class SingletonHolder {
+        private static final RetrofitClient INSTANCE = new RetrofitClient();
+    }
+
+    public static NewsService getNewsService() {
+        return SingletonHolder.INSTANCE.mNewsService;
+    }
+
+}
+

@@ -26,9 +26,9 @@ public interface NewsService {
      * @param startPage 开始的页码
      * @return 被观察对象
      */
-    @GET("nc/article/{type}/{id}/{startPage}-20.html")
+    @GET("nc/article/{channel}/{id}/{startPage}-20.html")
     Observable<Map<String, List<NewsChannel>>> getNewsList(
-            @Path("type") String type,
+            @Path("channel") String type,
             @Path("id") String id,
             @Path("startPage") int startPage);
 }
