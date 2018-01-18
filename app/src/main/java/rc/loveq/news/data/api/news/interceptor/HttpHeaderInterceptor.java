@@ -1,4 +1,4 @@
-package rc.loveq.news.data.api.interceptor;
+package rc.loveq.news.data.api.news.interceptor;
 
 import java.io.IOException;
 

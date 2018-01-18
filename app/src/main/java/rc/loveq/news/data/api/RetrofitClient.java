@@ -11,8 +11,8 @@ import okhttp3.OkHttpClient;
 import okhttp3.logging.HttpLoggingInterceptor;
 import rc.loveq.baselib.http.HttpCacheInterceptor;
 import rc.loveq.news.App;
-import rc.loveq.news.data.api.interceptor.HttpHeaderInterceptor;
-import rc.loveq.news.data.api.news.NewsService;
+import rc.loveq.news.data.api.eyepetizer.EyepetizerService;
+import rc.loveq.news.data.api.news.interceptor.HttpHeaderInterceptor;
 import retrofit2.Retrofit;
 import retrofit2.adapter.rxjava2.RxJava2CallAdapterFactory;
 import retrofit2.converter.gson.GsonConverterFactory;
@@ -25,7 +25,7 @@ import retrofit2.converter.gson.GsonConverterFactory;
 public class RetrofitClient {
 
     private Retrofit mRetrofit;
-    private NewsService mNewsService;
+    private EyepetizerService mEyepetizerService;
     private static volatile OkHttpClient sOkHttpClient;
 
 
@@ -51,17 +51,17 @@ public class RetrofitClient {
                 .client(okHttpClient)
                 .addConverterFactory(GsonConverterFactory.create(gson))
                 .addCallAdapterFactory(RxJava2CallAdapterFactory.create())
-                .baseUrl(NewsService.NEW_END_POINT)
+                .baseUrl(EyepetizerService.EYEPETIZER_END_POINT)
                 .build();
-        mNewsService = mRetrofit.create(NewsService.class);
+        mEyepetizerService = mRetrofit.create(EyepetizerService.class);
     }
 
     private static class SingletonHolder {
         private static final RetrofitClient INSTANCE = new RetrofitClient();
     }
 
-    public static NewsService getNewsService() {
-        return SingletonHolder.INSTANCE.mNewsService;
+    public static EyepetizerService getEyepetizerService() {
+        return SingletonHolder.INSTANCE.mEyepetizerService;
     }
 
 }

@@ -1,4 +1,4 @@
-package rc.loveq.news.ui.news.channels;
+package rc.loveq.news.ui.home.tab;
 
 import android.os.Bundle;
 import android.support.annotation.Nullable;
@@ -15,32 +15,32 @@ import rc.loveq.news.R;
  * 0n 2018/1/13 16:26
  */
 
-public class NewsChannelFragment extends LazyLoadFragment implements NewsChannelView {
-    public static final String NEWS_ID = "NEWS_ID";
-    public static final String NEWS_TYPE = "NEWS_TYPE";
-    private NewsChannelPresenter mPresenter;
-    private String mNewsId;
-    private String mNewsType;
+public class TabFragment extends LazyLoadFragment implements TabView {
+    public static final String TAB_INDEX = "TAB_INDEX";
+    public static final String TAB_NAME = "TAB_NAME";
+    private TabPresenter mPresenter;
+    private String mTabIndex;
+    private String mTabName;
 
-    public static NewsChannelFragment newInstance(String newsId, String newsType) {
+    public static TabFragment newInstance(String tabIndex, String tabName) {
         Bundle args = new Bundle();
-        args.putString(NEWS_ID, newsId);
-        args.putString(NEWS_TYPE, newsType);
-        NewsChannelFragment fragment = new NewsChannelFragment();
+        args.putString(TAB_INDEX, tabIndex);
+        args.putString(TAB_NAME, tabName);
+        TabFragment fragment = new TabFragment();
         fragment.setArguments(args);
         return fragment;
     }
 
     @Override
     protected int getLayoutId() {
-        return R.layout.fragment_news_channel;
+        return R.layout.fragment_home_tab;
     }
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        mNewsId = getArguments().getString(NEWS_ID);
-        mNewsType = getArguments().getString(NEWS_TYPE);
+        mTabIndex = getArguments().getString(TAB_INDEX);
+        mTabName = getArguments().getString(TAB_NAME);
     }
 
     @Override
@@ -48,14 +48,14 @@ public class NewsChannelFragment extends LazyLoadFragment implements NewsChannel
         RecyclerView recyclerView = view.findViewById(R.id.recycler);
         recyclerView.setAdapter(new MyAdapter());
         recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
-        mPresenter = new NewsChannelPresenter();
+        mPresenter = new TabPresenter();
         mPresenter.onAttach(this);
     }
 
 
     @Override
     protected void lazyLoadData() {
-        mPresenter.loadData(mNewsType, mNewsId);
+        mPresenter.loadData(mTabName, mTabIndex);
     }
 
     @Override

@@ -1,4 +1,4 @@
-package rc.loveq.news.data.api.model;
+package rc.loveq.news.data.api.news.model;
 
 import java.util.List;
 

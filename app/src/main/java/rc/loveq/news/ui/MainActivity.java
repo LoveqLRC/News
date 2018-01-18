@@ -15,13 +15,13 @@ import rc.loveq.baselib.ui.FragmentFactory;
 import rc.loveq.baselib.ui.bottomnavigation.BottomNavigationViewHelper;
 import rc.loveq.news.R;
 import rc.loveq.news.ui.discover.DiscoverFragment;
-import rc.loveq.news.ui.news.NewsFragment;
+import rc.loveq.news.ui.home.HomeFragment;
 import rc.loveq.news.ui.profile.ProfileFragment;
 import rc.loveq.news.ui.video.VideoFragment;
 
 public class MainActivity extends BaseActivity implements BottomNavigationView.OnNavigationItemSelectedListener {
 
-    public NewsFragment mNewsFragment;
+    public HomeFragment mHomeFragment;
     public VideoFragment mVideoFragment;
     public DiscoverFragment mDiscoverFragment;
     public ProfileFragment mProfileFragment;
@@ -63,7 +63,7 @@ public class MainActivity extends BaseActivity implements BottomNavigationView.O
 
     private void setupFragment(Bundle savedInstanceState) {
         if (savedInstanceState != null) {
-            mNewsFragment = (NewsFragment) getSupportFragmentManager().findFragmentByTag(NewsFragment.class.getName());
+            mHomeFragment = (HomeFragment) getSupportFragmentManager().findFragmentByTag(HomeFragment.class.getName());
             mVideoFragment = (VideoFragment) getSupportFragmentManager().findFragmentByTag(VideoFragment.class.getName());
             mDiscoverFragment = (DiscoverFragment) getSupportFragmentManager().findFragmentByTag(DiscoverFragment.class.getName());
             mProfileFragment = (ProfileFragment) getSupportFragmentManager().findFragmentByTag(ProfileFragment.class.getName());
@@ -106,11 +106,11 @@ public class MainActivity extends BaseActivity implements BottomNavigationView.O
         switch (index) {
             case FragmentTabs.NEWS:
                 mToolbar.setTitle(R.string.title_news);
-                if (mNewsFragment == null) {
-                    mNewsFragment = FragmentFactory.createFragment(NewsFragment.class);
-                    transaction.add(R.id.container, mNewsFragment, NewsFragment.class.getName());
+                if (mHomeFragment == null) {
+                    mHomeFragment = FragmentFactory.createFragment(HomeFragment.class);
+                    transaction.add(R.id.container, mHomeFragment, HomeFragment.class.getName());
                 } else {
-                    transaction.show(mNewsFragment);
+                    transaction.show(mHomeFragment);
                 }
                 break;
             case FragmentTabs.VIDEO:
@@ -145,8 +145,8 @@ public class MainActivity extends BaseActivity implements BottomNavigationView.O
     }
 
     private void hideFragment(FragmentTransaction transaction) {
-        if (mNewsFragment != null) {
-            transaction.hide(mNewsFragment);
+        if (mHomeFragment != null) {
+            transaction.hide(mHomeFragment);
         }
         if (mVideoFragment != null) {
             transaction.hide(mVideoFragment);

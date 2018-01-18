@@ -4,7 +4,7 @@ import java.util.List;
 import java.util.Map;
 
 import io.reactivex.Observable;
-import rc.loveq.news.data.api.model.NewsChannel;
+import rc.loveq.news.data.api.news.model.NewsChannel;
 
 /**
  * Author：Rc
@@ -15,6 +15,6 @@ public class AppApiHelper implements ApiHelper {
 
     @Override
     public Observable<Map<String, List<NewsChannel>>> getNewsChannelList(String channel, String id, int page) {
-        return RetrofitClient.getNewsService().getNewsList(channel, id, page);
+        return null;
     }
 }

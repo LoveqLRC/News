@@ -4,7 +4,7 @@ import java.util.List;
 import java.util.Map;
 
 import io.reactivex.Observable;
-import rc.loveq.news.data.api.model.NewsChannel;
+import rc.loveq.news.data.api.news.model.NewsChannel;
 import retrofit2.http.GET;
 import retrofit2.http.Path;
 

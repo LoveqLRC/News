@@ -1,4 +1,4 @@
-package rc.loveq.news.ui.news.channels;
+package rc.loveq.news.ui.home.tab;
 
 import rc.loveq.baselib.ui.mvp.MvpView;
 
@@ -7,6 +7,6 @@ import rc.loveq.baselib.ui.mvp.MvpView;
  * Description:
  */
 
-public interface NewsChannelView extends MvpView {
+public interface TabView extends MvpView {
 
 }
