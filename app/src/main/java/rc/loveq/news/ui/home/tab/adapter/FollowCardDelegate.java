@@ -2,6 +2,8 @@ package rc.loveq.news.ui.home.tab.adapter;
 
 import android.text.TextUtils;
 
+import com.bumptech.glide.Glide;
+
 import rc.loveq.baselib.ui.adapter.ItemViewDelegate;
 import rc.loveq.baselib.ui.adapter.ViewHolder;
 import rc.loveq.news.R;
@@ -27,6 +29,7 @@ public class FollowCardDelegate implements ItemViewDelegate<Eyepetizer.ItemListB
 
     @Override
     public void convert(ViewHolder holder, Eyepetizer.ItemListBean bean, int position) {
-
+        Glide.with(holder.itemView.getContext()).load(bean.getData().get)
+                .into()
     }
 }

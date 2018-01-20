@@ -14,6 +14,7 @@ import rc.loveq.news.data.api.eyepetizer.model.Eyepetizer;
 
 public class TextCardDelegate implements ItemViewDelegate<Eyepetizer.ItemListBean> {
     public static final String TEXT_CARD_DELEGATE = "textCard";
+
     @Override
     public int getItemViewLayoutId() {
         return R.layout.item_text_card;
@@ -26,6 +27,6 @@ public class TextCardDelegate implements ItemViewDelegate<Eyepetizer.ItemListBea
 
     @Override
     public void convert(ViewHolder holder, Eyepetizer.ItemListBean bean, int position) {
-
+        holder.setText(R.id.tv_title, bean.getData().getText());
     }
 }
