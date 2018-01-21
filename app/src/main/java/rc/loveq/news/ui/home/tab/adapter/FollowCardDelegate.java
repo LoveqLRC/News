@@ -1,6 +1,7 @@
 package rc.loveq.news.ui.home.tab.adapter;
 
 import android.text.TextUtils;
+import android.widget.ImageView;
 
 import com.bumptech.glide.Glide;
 
@@ -29,7 +30,10 @@ public class FollowCardDelegate implements ItemViewDelegate<Eyepetizer.ItemListB
 
     @Override
     public void convert(ViewHolder holder, Eyepetizer.ItemListBean bean, int position) {
-        Glide.with(holder.itemView.getContext()).load(bean.getData().get)
-                .into()
+        Glide.with(holder.itemView.getContext())
+                .load(bean.getData().getContent().getData().getCover().getFeed())
+                .into((ImageView) holder.getView(R.id.iv_follow));
+        holder.setText(R.id.tv_follow_content, bean.getData().getContent().getData().getDescription());
+
     }
 }

@@ -6,15 +6,18 @@
     android:orientation="vertical">
 
     <rc.loveq.baselib.ui.widget.FourThreeImageView
+        android:id="@+id/ftiv_vsc"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         />
 
     <TextView
+        android:id="@+id/tv_vsc_title"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"/>
 
     <TextView
+        android:id="@+id/tv_vsc_content"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"/>
 </rc.loveq.baselib.ui.widget.ForegroundLinearLayout>

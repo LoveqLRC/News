@@ -6,9 +6,12 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
 
-import rc.loveq.baselib.MyAdapter;
+import java.util.List;
+
 import rc.loveq.baselib.ui.LazyLoadFragment;
 import rc.loveq.news.R;
+import rc.loveq.news.data.api.eyepetizer.model.Eyepetizer;
+import rc.loveq.news.ui.home.tab.adapter.TabAdapter;
 
 /**
  * Author：Rc
@@ -21,6 +24,9 @@ public class TabFragment extends LazyLoadFragment implements TabView {
     private TabPresenter mPresenter;
     private String mTabIndex;
     private String mTabName;
+//    private List<Eyepetizer.ItemListBean> mItemList;
+    public TabAdapter mTabAdapter;
+    public RecyclerView mRecyclerView;
 
     public static TabFragment newInstance(String tabIndex, String tabName) {
         Bundle args = new Bundle();
@@ -45,9 +51,9 @@ public class TabFragment extends LazyLoadFragment implements TabView {
 
     @Override
     protected void initView(View view) {
-        RecyclerView recyclerView = view.findViewById(R.id.recycler);
-        recyclerView.setAdapter(new MyAdapter());
-        recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
+        mRecyclerView = view.findViewById(R.id.recycler);
+//        mItemList = new ArrayList<>();
+
         mPresenter = new TabPresenter();
         mPresenter.onAttach(this);
     }
@@ -62,5 +68,13 @@ public class TabFragment extends LazyLoadFragment implements TabView {
     public void onDestroyView() {
         mPresenter.onDetach();
         super.onDestroyView();
+    }
+
+    @Override
+    public void dataLoadFinish(List<Eyepetizer.ItemListBean> itemList) {
+        mTabAdapter = new TabAdapter(mActivity, itemList);
+        mRecyclerView.setAdapter(mTabAdapter);
+//        recyclerView.setAdapter(new MyAdapter());
+        mRecyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
     }
 }

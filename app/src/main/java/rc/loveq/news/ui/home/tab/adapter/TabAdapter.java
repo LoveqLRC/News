@@ -12,9 +12,12 @@ import rc.loveq.news.data.api.eyepetizer.model.Eyepetizer;
  * Description:
  */
 
-public class TabAdapter extends MultiItemTypeAdapter<List<Eyepetizer.ItemListBean>> {
-    public TabAdapter(Context context, List<List<Eyepetizer.ItemListBean>> datas) {
-        super(context, datas);
+public class TabAdapter extends MultiItemTypeAdapter<Eyepetizer.ItemListBean> {
 
+    public TabAdapter(Context context, List<Eyepetizer.ItemListBean> datas) {
+        super(context, datas);
+        addItemViewDelegate(new TextCardDelegate());
+        addItemViewDelegate(new FollowCardDelegate());
+//        addItemViewDelegate(new VideoSmallCardDelegate());
     }
 }

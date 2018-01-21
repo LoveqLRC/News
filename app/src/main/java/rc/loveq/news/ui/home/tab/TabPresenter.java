@@ -1,10 +1,7 @@
 package rc.loveq.news.ui.home.tab;
 
-import rc.loveq.baselib.http.BaseSubscriber;
 import rc.loveq.baselib.http.RequestCallback;
 import rc.loveq.baselib.ui.BasePresenter;
-import rc.loveq.baselib.utils.RxSchedulers;
-import rc.loveq.news.data.api.RetrofitClient;
 import rc.loveq.news.data.api.eyepetizer.model.Eyepetizer;
 
 /**
@@ -19,11 +16,11 @@ public class TabPresenter<V extends TabView> extends BasePresenter<V>
     @Override
     public void loadData(String tabName, String tabIndex) {
         getMvpView().showLoading();
-        RetrofitClient.getEyepetizerService()
-                .getTabList(Integer.valueOf(tabIndex), 0, 10)
-                .compose(bindToLifecycle())
-                .compose(RxSchedulers.io_main())
-                .subscribe(new BaseSubscriber<>(this));
+//        RetrofitClient.getEyepetizerService()
+//                .getTabList(Integer.valueOf(tabIndex), 0, 10)
+//                .compose(bindToLifecycle())
+//                .compose(RxSchedulers.io_main())
+//                .subscribe(new BaseSubscriber<>(this));
 
     }
 
@@ -40,7 +37,7 @@ public class TabPresenter<V extends TabView> extends BasePresenter<V>
     @Override
     public void requestSuccess(Eyepetizer eyepetizer) {
         getMvpView().hideLoading();
-
+        getMvpView().dataLoadFinish(eyepetizer.getItemList());
     }
 
 

@@ -1,6 +1,9 @@
 package rc.loveq.news.ui.home.tab.adapter;
 
 import android.text.TextUtils;
+import android.widget.ImageView;
+
+import com.bumptech.glide.Glide;
 
 import rc.loveq.baselib.ui.adapter.ItemViewDelegate;
 import rc.loveq.baselib.ui.adapter.ViewHolder;
@@ -28,6 +31,11 @@ public class VideoSmallCardDelegate implements ItemViewDelegate<Eyepetizer.ItemL
 
     @Override
     public void convert(ViewHolder holder, Eyepetizer.ItemListBean bean, int position) {
-
+        Glide.with(holder.itemView.getContext())
+                .load(bean.getData().getContent().getData().getCover().getFeed())
+                .into((ImageView) holder.getView(R.id.ftiv_vsc));
+        holder.setText(R.id.tv_vsc_title, bean.getData().getText())
+                .setText(R.id.tv_follow_content,
+                        bean.getData().getContent().getData().getAuthor().getDescription());
     }
 }

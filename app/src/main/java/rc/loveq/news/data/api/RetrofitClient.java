@@ -64,5 +64,27 @@ public class RetrofitClient {
         return SingletonHolder.INSTANCE.mEyepetizerService;
     }
 
+
+    private OkHttpClient getOkHttpClient() {
+        if (sOkHttpClient == null) {
+            synchronized (RetrofitClient.class) {
+                if (sOkHttpClient != null) {
+                    File file = new File(App.getContext().getCacheDir(), "cache");
+                    Cache cache = new Cache(file, 1024 * 1024 * 100);
+                    sOkHttpClient = new OkHttpClient.Builder()
+                            .cache(cache)
+                            .addNetworkInterceptor(mCacheInterceptor)
+                            .addInterceptor(mCacheInterceptor)
+                            .addInterceptor(mHeaderInterceptor)
+                            .addInterceptor(mHttpLoggingInterceptor)
+                            .retryOnConnectionFailure(true)
+                            .connectTimeout(30, TimeUnit.SECONDS)
+                            .build();
+                }
+            }
+        }
+        return sOkHttpClient;
+    }
+
 }
 

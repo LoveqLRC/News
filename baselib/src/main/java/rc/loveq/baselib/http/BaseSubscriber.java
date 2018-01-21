@@ -37,6 +37,8 @@ public class BaseSubscriber<T> implements Observer<T> {
 
     @Override
     public void onComplete() {
-
+        if (mCallback != null) {
+            mCallback.requestComplete();
+        }
     }
 }
