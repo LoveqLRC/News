@@ -33,8 +33,8 @@ public class HomeFragment extends BaseFragment {
 
     @Override
     protected void initData() {
-        List<String> tabNames = Arrays.asList(mActivity.getResources().getStringArray(R.array.eye_tab_name));
-        List<String> tabIndexs = Arrays.asList(mActivity.getResources().getStringArray(R.array.eye_tab_index));
+        List<String> tabNames = Arrays.asList(mActivity.getResources().getStringArray(R.array.news_channel));
+        List<String> tabIndexs = Arrays.asList(mActivity.getResources().getStringArray(R.array.news_channel_id));
         mVpHome.setAdapter(new HomePagerAdapter(getChildFragmentManager(), tabNames, tabIndexs));
         mTabLayout.setupWithViewPager(mVpHome);
     }

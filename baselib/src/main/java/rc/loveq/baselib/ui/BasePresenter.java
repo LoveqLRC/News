@@ -16,7 +16,8 @@ import rc.loveq.baselib.ui.rxlifecycle.RxLifecyclePresenter;
  * Description:
  */
 
-public class BasePresenter<V extends MvpView> implements MvpPresenter<V>, LifecycleProvider<PresenterEvent> {
+public class BasePresenter<V extends MvpView> implements MvpPresenter<V>,
+        LifecycleProvider<PresenterEvent> {
     private final BehaviorSubject<PresenterEvent> lifecycleSubject = BehaviorSubject.create();
     private V mMvpView;
 

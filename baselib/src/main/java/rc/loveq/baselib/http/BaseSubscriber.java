@@ -1,6 +1,7 @@
 package rc.loveq.baselib.http;
 
 import io.reactivex.Observer;
+import io.reactivex.SingleObserver;
 import io.reactivex.disposables.Disposable;
 
 /**
@@ -8,7 +9,7 @@ import io.reactivex.disposables.Disposable;
  * Description:
  */
 
-public class BaseSubscriber<T> implements Observer<T> {
+public class BaseSubscriber<T> implements Observer<T>,SingleObserver<T> {
 
     private RequestCallback<T> mCallback;
 
@@ -19,6 +20,13 @@ public class BaseSubscriber<T> implements Observer<T> {
     @Override
     public void onSubscribe(Disposable d) {
 
+    }
+
+    @Override
+    public void onSuccess(T t) {
+        if (mCallback != null) {
+            mCallback.requestSuccess(t);
+        }
     }
 
     @Override

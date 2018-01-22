@@ -1,4 +1,4 @@
-package rc.loveq.news.ui.home.tab.adapter;
+package rc.loveq.news.ui.video.adapter;
 
 import android.content.Context;
 
@@ -12,9 +12,9 @@ import rc.loveq.news.data.api.eyepetizer.model.Eyepetizer;
  * Description:
  */
 
-public class TabAdapter extends MultiItemTypeAdapter<Eyepetizer.ItemListBean> {
+public class VideoAdapter extends MultiItemTypeAdapter<Eyepetizer.ItemListBean> {
 
-    public TabAdapter(Context context, List<Eyepetizer.ItemListBean> datas) {
+    public VideoAdapter(Context context, List<Eyepetizer.ItemListBean> datas) {
         super(context, datas);
         addItemViewDelegate(new TextCardDelegate());
         addItemViewDelegate(new FollowCardDelegate());

@@ -11,7 +11,7 @@ import okhttp3.OkHttpClient;
 import okhttp3.logging.HttpLoggingInterceptor;
 import rc.loveq.baselib.http.HttpCacheInterceptor;
 import rc.loveq.news.App;
-import rc.loveq.news.data.api.eyepetizer.EyepetizerService;
+import rc.loveq.news.data.api.news.NewsService;
 import rc.loveq.news.data.api.news.interceptor.HttpHeaderInterceptor;
 import retrofit2.Retrofit;
 import retrofit2.adapter.rxjava2.RxJava2CallAdapterFactory;
@@ -25,7 +25,8 @@ import retrofit2.converter.gson.GsonConverterFactory;
 public class RetrofitClient {
 
     private Retrofit mRetrofit;
-    private EyepetizerService mEyepetizerService;
+//    private EyepetizerService mEyepetizerService;
+    private NewsService mNewsService;
     private static volatile OkHttpClient sOkHttpClient;
 
 
@@ -51,40 +52,19 @@ public class RetrofitClient {
                 .client(okHttpClient)
                 .addConverterFactory(GsonConverterFactory.create(gson))
                 .addCallAdapterFactory(RxJava2CallAdapterFactory.create())
-                .baseUrl(EyepetizerService.EYEPETIZER_END_POINT)
+                .baseUrl(NewsService.NEW_END_POINT)
                 .build();
-        mEyepetizerService = mRetrofit.create(EyepetizerService.class);
+        mNewsService = mRetrofit.create(NewsService.class);
     }
 
     private static class SingletonHolder {
         private static final RetrofitClient INSTANCE = new RetrofitClient();
     }
 
-    public static EyepetizerService getEyepetizerService() {
-        return SingletonHolder.INSTANCE.mEyepetizerService;
+    public static NewsService getNewsService() {
+        return SingletonHolder.INSTANCE.mNewsService;
     }
 
-
-    private OkHttpClient getOkHttpClient() {
-        if (sOkHttpClient == null) {
-            synchronized (RetrofitClient.class) {
-                if (sOkHttpClient != null) {
-                    File file = new File(App.getContext().getCacheDir(), "cache");
-                    Cache cache = new Cache(file, 1024 * 1024 * 100);
-                    sOkHttpClient = new OkHttpClient.Builder()
-                            .cache(cache)
-                            .addNetworkInterceptor(mCacheInterceptor)
-                            .addInterceptor(mCacheInterceptor)
-                            .addInterceptor(mHeaderInterceptor)
-                            .addInterceptor(mHttpLoggingInterceptor)
-                            .retryOnConnectionFailure(true)
-                            .connectTimeout(30, TimeUnit.SECONDS)
-                            .build();
-                }
-            }
-        }
-        return sOkHttpClient;
-    }
 
 }
 

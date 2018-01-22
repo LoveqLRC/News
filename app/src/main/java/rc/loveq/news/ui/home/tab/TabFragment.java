@@ -4,14 +4,17 @@ import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.text.TextUtils;
 import android.view.View;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import rc.loveq.baselib.ui.LazyLoadFragment;
+import rc.loveq.baselib.ui.adapter.wrapper.LoadMoreWrapper;
 import rc.loveq.news.R;
-import rc.loveq.news.data.api.eyepetizer.model.Eyepetizer;
-import rc.loveq.news.ui.home.tab.adapter.TabAdapter;
+import rc.loveq.news.data.api.news.model.NewsChannel;
+import rc.loveq.news.ui.home.tab.adapter.HomeTabAdapter;
 
 /**
  * Author：Rc
@@ -24,9 +27,10 @@ public class TabFragment extends LazyLoadFragment implements TabView {
     private TabPresenter mPresenter;
     private String mTabIndex;
     private String mTabName;
-//    private List<Eyepetizer.ItemListBean> mItemList;
-    public TabAdapter mTabAdapter;
-    public RecyclerView mRecyclerView;
+    private RecyclerView mRecyclerView;
+    private List<NewsChannel> mNewsChannelList;
+    private HomeTabAdapter mHomeTabAdapter;
+    private LoadMoreWrapper mLoadMoreWrapper;
 
     public static TabFragment newInstance(String tabIndex, String tabName) {
         Bundle args = new Bundle();
@@ -46,14 +50,25 @@ public class TabFragment extends LazyLoadFragment implements TabView {
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         mTabIndex = getArguments().getString(TAB_INDEX);
-        mTabName = getArguments().getString(TAB_NAME);
+        String tabName = getArguments().getString(TAB_NAME);
+        if (TextUtils.equals(tabName, "头条")) {
+            mTabName = "headline";
+        } else if (TextUtils.equals(tabName, "房产")) {
+            mTabName = "house";
+        } else {
+            mTabName = "list";
+        }
     }
 
     @Override
     protected void initView(View view) {
+        mNewsChannelList = new ArrayList<>();
         mRecyclerView = view.findViewById(R.id.recycler);
-//        mItemList = new ArrayList<>();
-
+        mHomeTabAdapter = new HomeTabAdapter(mActivity, mNewsChannelList);
+        mLoadMoreWrapper = new LoadMoreWrapper(mHomeTabAdapter);
+        mLoadMoreWrapper.setLoadMoreView(R.layout.default_loading);
+        mRecyclerView.setAdapter(mLoadMoreWrapper);
+        mRecyclerView.setLayoutManager(new LinearLayoutManager(mActivity));
         mPresenter = new TabPresenter();
         mPresenter.onAttach(this);
     }
@@ -71,10 +86,8 @@ public class TabFragment extends LazyLoadFragment implements TabView {
     }
 
     @Override
-    public void dataLoadFinish(List<Eyepetizer.ItemListBean> itemList) {
-        mTabAdapter = new TabAdapter(mActivity, itemList);
-        mRecyclerView.setAdapter(mTabAdapter);
-//        recyclerView.setAdapter(new MyAdapter());
-        mRecyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
+    public void dataLoadFinish(List<NewsChannel> itemList) {
+        mNewsChannelList.addAll(itemList);
+        mLoadMoreWrapper.notifyDataSetChanged();
     }
 }

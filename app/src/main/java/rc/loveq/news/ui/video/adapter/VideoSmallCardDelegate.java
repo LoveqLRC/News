@@ -1,12 +1,12 @@
-package rc.loveq.news.ui.home.tab.adapter;
+package rc.loveq.news.ui.video.adapter;
 
 import android.text.TextUtils;
 import android.widget.ImageView;
 
 import com.bumptech.glide.Glide;
 
-import rc.loveq.baselib.ui.adapter.ItemViewDelegate;
-import rc.loveq.baselib.ui.adapter.ViewHolder;
+import rc.loveq.baselib.ui.adapter.base.ItemViewDelegate;
+import rc.loveq.baselib.ui.adapter.base.ViewHolder;
 import rc.loveq.news.R;
 import rc.loveq.news.data.api.eyepetizer.model.Eyepetizer;
 

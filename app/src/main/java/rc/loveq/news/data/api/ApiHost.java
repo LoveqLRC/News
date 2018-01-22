@@ -1,6 +1,6 @@
 package rc.loveq.news.data.api;
 
-import android.support.annotation.IntDef;
+import android.support.annotation.StringDef;
 
 import java.lang.annotation.Retention;
 import java.lang.annotation.RetentionPolicy;
@@ -10,9 +10,9 @@ import java.lang.annotation.RetentionPolicy;
  * 0n 2018/1/21 21:36
  */
 
-@IntDef({ApiHost.NEWS, ApiHost.Eyepetizer})
+@StringDef({ApiHost.NEWS, ApiHost.EYEPETIZER})
 @Retention(RetentionPolicy.SOURCE)
 public @interface ApiHost {
-    int NEWS = 0;
-    int Eyepetizer = 1;
+    String NEWS = "http://c.m.163.com/";
+    String EYEPETIZER = "http://baobab.kaiyanapp.com/";
 }
