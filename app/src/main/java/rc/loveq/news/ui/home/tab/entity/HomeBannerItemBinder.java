@@ -7,8 +7,12 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import me.drakeet.multitype.ItemViewBinder;
 import rc.loveq.news.R;
+import rc.loveq.news.data.api.news.model.NewsChannel;
 
 /**
  * Created by rc on 2018/1/22.
@@ -25,20 +29,31 @@ public class HomeBannerItemBinder extends ItemViewBinder<HomeBanner, HomeBannerI
 
     @Override
     protected void onBindViewHolder(@NonNull ViewHolder holder, @NonNull HomeBanner item) {
-
+        holder.setBanners(item.mNewsChannel.getAds());
     }
 
     public class ViewHolder extends RecyclerView.ViewHolder {
         private final RecyclerView mRecyclerView;
+        private List<NewsChannel.AdsBean> mAdsBeanList;
+        private final HomeBannerAdapter mHomeBannerAdapter;
 
         public ViewHolder(View itemView) {
             super(itemView);
+            mAdsBeanList = new ArrayList<>();
+
             mRecyclerView = itemView.findViewById(R.id.rv_home_banner);
             mRecyclerView.setLayoutManager(new LinearLayoutManager(itemView.getContext(),
                     LinearLayoutManager.HORIZONTAL, false));
-            HomeBannerAdapter homeBannerAdapter = new HomeBannerAdapter(itemView.getContext(), R.layout.item_home_banner_detail, null);
-            mRecyclerView.setAdapter(homeBannerAdapter);
+            mHomeBannerAdapter = new HomeBannerAdapter(itemView.getContext(),
+                    R.layout.item_home_banner_detail, mAdsBeanList);
+            mRecyclerView.setAdapter(mHomeBannerAdapter);
         }
+
+        public void setBanners(List<NewsChannel.AdsBean> mlist) {
+            mAdsBeanList.addAll(mlist);
+            mHomeBannerAdapter.notifyDataSetChanged();
+        }
+
     }
 
 

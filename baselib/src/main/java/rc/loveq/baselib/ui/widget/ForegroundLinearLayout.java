@@ -11,7 +11,7 @@ import rc.loveq.baselib.R;
 
 /**
  * Created by rc on 2018/1/20.
- * Description:
+ * Description: android:foreground="?android:selectableItemBackground"
  */
 
 public class ForegroundLinearLayout extends LinearLayout {
