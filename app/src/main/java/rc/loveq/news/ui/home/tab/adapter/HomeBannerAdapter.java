@@ -1,6 +1,7 @@
-package rc.loveq.news.ui.home.tab.entity;
+package rc.loveq.news.ui.home.tab.adapter;
 
 import android.content.Context;
+import android.widget.ImageView;
 
 import com.bumptech.glide.Glide;
 
@@ -8,7 +9,6 @@ import java.util.List;
 
 import rc.loveq.baselib.ui.adapter.BaseAdapter;
 import rc.loveq.baselib.ui.adapter.base.ViewHolder;
-import rc.loveq.baselib.ui.widget.FourThreeImageView;
 import rc.loveq.news.R;
 import rc.loveq.news.data.api.news.model.NewsChannel;
 
@@ -25,7 +25,7 @@ public class HomeBannerAdapter extends BaseAdapter<NewsChannel.AdsBean> {
 
     @Override
     protected void convert(ViewHolder holder, NewsChannel.AdsBean adsBean, int position) {
-        FourThreeImageView bannerView = holder.getView(R.id.ftiv_banner);
+        ImageView bannerView = holder.getView(R.id.ftiv_banner);
         Glide.with(bannerView).load(adsBean.getImgsrc())
                 .into(bannerView);
         holder.setText(R.id.tv_banner_title, adsBean.getTitle());

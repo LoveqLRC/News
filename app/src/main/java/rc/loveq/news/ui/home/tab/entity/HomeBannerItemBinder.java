@@ -13,6 +13,7 @@ import java.util.List;
 import me.drakeet.multitype.ItemViewBinder;
 import rc.loveq.news.R;
 import rc.loveq.news.data.api.news.model.NewsChannel;
+import rc.loveq.news.ui.home.tab.adapter.HomeBannerAdapter;
 
 /**
  * Created by rc on 2018/1/22.

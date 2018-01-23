@@ -21,19 +21,20 @@ public class TabPresenter<V extends TabView> extends BasePresenter<V>
 
     @Override
     public void loadData(String tabName, String tabIndex) {
-//        getMvpView().showLoading();
+        getMvpView().showLoading();
         RetrofitClient.getNewsService().getNewsList(tabName, tabIndex, 0)
                 .compose(bindToLifecycle())
                 .compose(RxSchedulers.io_main())
                 .subscribe(new BaseSubscriber<>(new RequestCallback<Map<String, List<NewsChannel>>>() {
                     @Override
                     public void requestFail(String failMsg) {
-
+                        getMvpView().hideLoading();
+                        getMvpView().showMessage(failMsg);
                     }
 
                     @Override
                     public void requestComplete() {
-
+                        getMvpView().hideLoading();
                     }
 
                     @Override

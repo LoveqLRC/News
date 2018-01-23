@@ -5,7 +5,10 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.TextView;
+
+import com.bumptech.glide.Glide;
 
 import me.drakeet.multitype.ItemViewBinder;
 import rc.loveq.news.R;
@@ -26,16 +29,20 @@ public class HomeTextItemBinder extends ItemViewBinder<HomeText, HomeTextItemBin
 
     @Override
     protected void onBindViewHolder(@NonNull ViewHolder holder, @NonNull HomeText item) {
-            holder.mTvTitle.setText("text : "+ item.mNewsChannel.getTitle());
+        holder.mTvTitle.setText("text : " + item.mNewsChannel.getTitle());
+        Glide.with(holder.mFivNewsImg).load(item.mNewsChannel.getImgsrc())
+                .into(holder.mFivNewsImg);
     }
 
     public class ViewHolder extends RecyclerView.ViewHolder {
 
         private final TextView mTvTitle;
+        public ImageView mFivNewsImg;
 
         public ViewHolder(View itemView) {
             super(itemView);
             mTvTitle = itemView.findViewById(R.id.title);
+            mFivNewsImg = itemView.findViewById(R.id.fiv_news_img);
         }
     }
 }

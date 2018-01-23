@@ -7,17 +7,14 @@ import android.support.v7.widget.RecyclerView;
 import android.text.TextUtils;
 import android.view.View;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import me.drakeet.multitype.Items;
 import me.drakeet.multitype.MultiTypeAdapter;
 import rc.loveq.baselib.ui.LazyLoadFragment;
-import rc.loveq.baselib.ui.adapter.wrapper.LoadMoreWrapper;
 import rc.loveq.news.R;
 import rc.loveq.news.Register;
 import rc.loveq.news.data.api.news.model.NewsChannel;
-import rc.loveq.news.ui.home.tab.adapter.HomeTabAdapter;
 import rc.loveq.news.ui.home.tab.entity.HomeBanner;
 import rc.loveq.news.ui.home.tab.entity.HomeImage;
 import rc.loveq.news.ui.home.tab.entity.HomeText;
@@ -34,10 +31,7 @@ public class TabFragment extends LazyLoadFragment implements TabView {
     private String mTabIndex;
     private String mTabName;
     private RecyclerView mRecyclerView;
-    private List<NewsChannel> mNewsChannelList;
     private Items mItems = new Items();
-    private HomeTabAdapter mHomeTabAdapter;
-    private LoadMoreWrapper mLoadMoreWrapper;
     private MultiTypeAdapter mMultiTypeAdapter;
 
     public static TabFragment newInstance(String tabIndex, String tabName) {
@@ -70,18 +64,12 @@ public class TabFragment extends LazyLoadFragment implements TabView {
 
     @Override
     protected void initView(View view) {
-        mNewsChannelList = new ArrayList<>();
         mRecyclerView = view.findViewById(R.id.recycler);
 
         mMultiTypeAdapter = new MultiTypeAdapter(mItems);
         mRecyclerView.setAdapter(mMultiTypeAdapter);
         Register.registerHomeItem(mMultiTypeAdapter, mActivity);
 
-
-//        mHomeTabAdapter = new HomeTabAdapter(mActivity, mNewsChannelList);
-//        mLoadMoreWrapper = new LoadMoreWrapper(mHomeTabAdapter);
-//        mLoadMoreWrapper.setLoadMoreView(R.layout.default_loading);
-//        mRecyclerView.setAdapter(mLoadMoreWrapper);
 
         mRecyclerView.setLayoutManager(new LinearLayoutManager(mActivity));
         mPresenter = new TabPresenter();
@@ -113,8 +101,5 @@ public class TabFragment extends LazyLoadFragment implements TabView {
             }
         }
         mMultiTypeAdapter.notifyDataSetChanged();
-
-//        mNewsChannelList.addAll(itemList);
-//        mLoadMoreWrapper.notifyDataSetChanged();
     }
 }
