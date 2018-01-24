@@ -29,7 +29,7 @@ public class HomeTextItemBinder extends ItemViewBinder<HomeText, HomeTextItemBin
 
     @Override
     protected void onBindViewHolder(@NonNull ViewHolder holder, @NonNull HomeText item) {
-        holder.mTvTitle.setText("text : " + item.mNewsChannel.getTitle());
+        holder.mTvTitle.setText(item.mNewsChannel.getTitle());
         Glide.with(holder.mFivNewsImg).load(item.mNewsChannel.getImgsrc())
                 .into(holder.mFivNewsImg);
     }

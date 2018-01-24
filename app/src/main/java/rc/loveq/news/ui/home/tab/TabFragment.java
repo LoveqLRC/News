@@ -2,6 +2,7 @@ package rc.loveq.news.ui.home.tab;
 
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.text.TextUtils;
@@ -33,6 +34,7 @@ public class TabFragment extends LazyLoadFragment implements TabView {
     private RecyclerView mRecyclerView;
     private Items mItems = new Items();
     private MultiTypeAdapter mMultiTypeAdapter;
+    private SwipeRefreshLayout mSrlHome;
 
     public static TabFragment newInstance(String tabIndex, String tabName) {
         Bundle args = new Bundle();
@@ -65,17 +67,25 @@ public class TabFragment extends LazyLoadFragment implements TabView {
     @Override
     protected void initView(View view) {
         mRecyclerView = view.findViewById(R.id.recycler);
-
+        mSrlHome = view.findViewById(R.id.srl_home);
         mMultiTypeAdapter = new MultiTypeAdapter(mItems);
         mRecyclerView.setAdapter(mMultiTypeAdapter);
         Register.registerHomeItem(mMultiTypeAdapter, mActivity);
-
 
         mRecyclerView.setLayoutManager(new LinearLayoutManager(mActivity));
         mPresenter = new TabPresenter();
         mPresenter.onAttach(this);
     }
 
+    @Override
+    public void showLoading() {
+        mSrlHome.setRefreshing(true);
+    }
+
+    @Override
+    public void hideLoading() {
+        mSrlHome.setRefreshing(false);
+    }
 
     @Override
     protected void lazyLoadData() {
